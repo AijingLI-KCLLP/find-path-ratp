@@ -5,7 +5,7 @@ Matrice d'adjacence pondérée par les temps de trajet entre stations (en minute
 
 from math import atan2, cos, radians, sin, sqrt
 
-from stations import N
+from stations import N,get_station
 
 
 def haversine_distance(lat1, lon1, lat2, lon2):
@@ -26,15 +26,11 @@ def haversine_distance(lat1, lon1, lat2, lon2):
 
 
 def estimate_travel_time(station1_id, station2_id, speed_kmh=30):
-    """
-    Estime le temps de trajet entre deux stations en minutes.
-    Vitesse moyenne du métro parisien : environ 30 km/h (incluant arrêts).
-    """
-    # Compléter la fonction pour calculer le temps de trajet entre deux stations
-    # Utiliser la distance à vol d'oiseau (haversine) et la vitesse moyenne pour estimer le temps
-    # Rappel : 1 heure = 60 minutes, v = d / t
+    station1 = get_station(station1_id)
+    station2 = get_station(station2_id)
+    d_km = haversine_distance(station1["lat"], station1["lon"], station2["lat"], station2["lon"])
 
-    return 1.0  # Valeur par défaut (à remplacer par le calcul réel)
+    return round((d_km/speed_kmh)*60) # unit: minute
 
 
 def apply_crowding_penalty(current_hour):
