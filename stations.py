@@ -2520,7 +2520,7 @@ N = len(STATIONS)
 NAME_TO_ID = {s["name"]: s["id"] for s in STATIONS}
 
 
-def get_station(station_id):
+def get_station_by_id(station_id):
     """Retourne les informations d'une station par son ID"""
     if 0 <= station_id < N:
         return STATIONS[station_id]

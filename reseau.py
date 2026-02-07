@@ -5,7 +5,7 @@ Matrice d'adjacence pondérée par les temps de trajet entre stations (en minute
 
 from math import atan2, cos, radians, sin, sqrt
 
-from stations import N,get_station
+from stations import N,get_station_by_id
 
 
 def haversine_distance(lat1, lon1, lat2, lon2):
@@ -26,8 +26,8 @@ def haversine_distance(lat1, lon1, lat2, lon2):
 
 
 def estimate_travel_time(station1_id, station2_id, speed_kmh=30):
-    station1 = get_station(station1_id)
-    station2 = get_station(station2_id)
+    station1 = get_station_by_id(station1_id)
+    station2 = get_station_by_id(station2_id)
     d_km = haversine_distance(station1["lat"], station1["lon"], station2["lat"], station2["lon"])
 
     return round((d_km/speed_kmh)*60) # unit: minute
@@ -615,7 +615,7 @@ def get_adjacency_matrix():
 
 def get_neighbors(station_id):
     """
-    Retourne la liste des voisins d'une station avec les temps de trajet.
+    Retourne la liste des tuples (neighbor_id, temps de trajet entre station_id et neighbor_id).
     Format: [(station_id, temps_trajet), ...]
     """
     adjacency = get_adjacency_matrix()
