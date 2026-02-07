@@ -47,5 +47,5 @@ Il choisit à chaque étape le nœud le plus prometteur avec le plus petit `f(n)
 - Closed list: nœuds déjà explorés
 
 ### Remarque importante
-Un noeud dans ce contexte est une entité qui stocke les information pour A* : station, `g(n)`,`h(n)`,`f(n)`, parent
+Un noeud dans ce contexte est une entité qui stocke les information pour A* : station, `g(n)`,`h(n)`,`f(n)`, parent.  
 Les informations métier d'une station (nom, lignes, coordonnées) restent dans `stations.py`.
