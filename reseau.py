@@ -131,15 +131,7 @@ def apply_random_perturbation_penalty(station1_id, station2_id):
 
 
 def heuristics(station1_id, station2_id, current_hour=8.0):
-    """
-    Heuristique pour A* : estimation du temps restant jusqu'à la destination.
-    Utilise la distance à vol d'oiseau convertie en temps.
-    """
-    # Estimer le temps de trajet à vol d'oiseau entre les deux stations
-    # Appliquez une pénalité de congestion en fonction de l'heure actuelle pour simuler les retards en heure de pointe
-    # Appliquez une pénalité de perturbations aléatoires pour simuler les retards imprévus (ex. incidents, travaux)
-    # Combinez les différentes pénalités pour obtenir une estimation réaliste du temps de trajet restant
-
+    return estimate_travel_time(station1_id, station2_id)
 
 # Définition des connexions du réseau par ligne (identifiants des stations)
 LIGNE_1 = [
