@@ -18,11 +18,25 @@ def A_star(start, end):
 
         closed_list.add(current_node_id)
 
+        for neighbor_id, travel_time in get_neighbors(current_node_id):
+            if neighbor_id in closed_list:
+                continue
 
+            tentative_g = current_node['g']+travel_time
 
+            # create neighbor
+            if neighbor_id not in open_dict:
+                neighbor_node = create_node_A_star(neighbor_id, g=tentative_g, h=heuristics(neighbor_id,end),parent=current_node_id)
+                heapq.heappush(open_heap, (neighbor_node['f'],neighbor_node['id'],))
+                open_dict[neighbor_id] = neighbor_node
+            # updaate neighbor
+            elif tentative_g < open_dict[neighbor_id]['g']:
+                neighbor_node = open_dict[neighbor_id]
+                neighbor_node['g'] = tentative_g
+                neighbor_node['f'] = tentative_g + neighbor_node['h']
+                neighbor_node['parent'] = current_node_id
 
-
-    return None
+    return [] # no path
 
 
 def create_node_A_star(station_id, g=float('inf'), h=0.0, parent=None):

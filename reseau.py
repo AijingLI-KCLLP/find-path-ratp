@@ -30,7 +30,7 @@ def estimate_travel_time(station1_id, station2_id, speed_kmh=30):
     station2 = get_station_by_id(station2_id)
     d_km = haversine_distance(station1["lat"], station1["lon"], station2["lat"], station2["lon"])
 
-    return round((d_km/speed_kmh)*60) # unit: minute
+    return (d_km/speed_kmh)*60.0 # unit: minute
 
 
 def apply_crowding_penalty(current_hour):
