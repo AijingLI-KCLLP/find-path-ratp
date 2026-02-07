@@ -26,7 +26,7 @@ def A_star(start, end):
 
             # create neighbor
             if neighbor_id not in open_dict:
-                neighbor_node = create_node_A_star(neighbor_id, g=tentative_g, h=heuristics(neighbor_id,end),parent=current_node_id)
+                neighbor_node = create_node_A_star(neighbor_id, g=tentative_g, h=heuristics(neighbor_id,end),parent=current_node)
                 heapq.heappush(open_heap, (neighbor_node['f'],neighbor_node['id'],))
                 open_dict[neighbor_id] = neighbor_node
             # updaate neighbor
@@ -34,14 +34,15 @@ def A_star(start, end):
                 neighbor_node = open_dict[neighbor_id]
                 neighbor_node['g'] = tentative_g
                 neighbor_node['f'] = tentative_g + neighbor_node['h']
-                neighbor_node['parent'] = current_node_id
+                neighbor_node['parent'] = current_node
+                heapq.heappush(open_heap, (neighbor_node['f'], neighbor_node['id']))
 
     return [] # no path
 
 
 def create_node_A_star(station_id, g=float('inf'), h=0.0, parent=None):
     return {
-        'station_id': station_id,
+        'id': station_id,
         'g': g,
         'h': h,
         'f': g+h,
@@ -52,8 +53,8 @@ def reconstruct_path(end_node):
     path = []
     current = end_node
 
-    while end_node is not None:
-        path.append(end_node)
+    while current is not None:
+        path.append(current)
         current = current['parent']
 
     return path[::-1]
