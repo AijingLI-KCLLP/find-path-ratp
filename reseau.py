@@ -29,8 +29,10 @@ def estimate_travel_time(station1_id, station2_id, speed_kmh=30):
     station1 = get_station_by_id(station1_id)
     station2 = get_station_by_id(station2_id)
     d_km = haversine_distance(station1["lat"], station1["lon"], station2["lat"], station2["lon"])
+    normal_time = (d_km/speed_kmh)*60.0
+    perturbation = apply_random_perturbation_penalty()
 
-    return (d_km/speed_kmh)*60.0 # unit: minute
+    return normal_time + perturbation # unit: minute
 
 
 def apply_crowding_penalty(current_hour):
@@ -74,7 +76,7 @@ def apply_crowding_penalty(current_hour):
     return 0.0  # Valeur par défaut (à remplacer par le calcul réel)
 
 
-def apply_random_perturbation_penalty(station1_id, station2_id):
+def apply_random_perturbation_penalty():
     """
     Applique une pénalité de perturbations aléatoires pour simuler les retards imprévus (ex. incidents, travaux).
     La pénalité est basée sur une probabilité d'incident et une durée moyenne de perturbation.
@@ -125,9 +127,13 @@ def apply_random_perturbation_penalty(station1_id, station2_id):
         },  # Conditions météo (inondation, etc.)
     ]
 
-    # Utiliser la fonction random pour déterminer si une perturbation se produit et calculer la pénalité correspondante
+    total_penalty = 0.0
 
-    return 0.0  # Valeur par défaut (à remplacer par le calcul réel)
+    for perturbation in PERTURBATIONS:
+        if random.random() < perturbation["probability"]:
+            total_penalty += perturbation["severity"]
+
+    return total_penalty
 
 
 def heuristics(station1_id, station2_id, current_hour=8.0):
